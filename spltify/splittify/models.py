@@ -24,7 +24,7 @@ class SplitWays(models.Model):
 
 class Bill(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_is_payer')
+    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_is_payer',)
     way_to_split = models.ForeignKey(SplitWays, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     total_amount = models.IntegerField()  # this is the sum of all amounts in transactions table
@@ -40,9 +40,10 @@ class Transactions(models.Model):
         verbose_name_plural = "Transactions"
 
     bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
-    bill_ower = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'trip__users': True})
+    bill_ower = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField()
     completion = models.BooleanField()
 
     def __str__(self):
         return f'{self.bill_ower.username} owes {self.amount} by bill {self.bill.name} to {self.bill.payer}'
+
