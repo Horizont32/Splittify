@@ -25,7 +25,7 @@ class SplitWays(models.Model):
 class Bill(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_is_payer',)
-    way_to_split = models.ForeignKey(SplitWays, on_delete=models.CASCADE)
+    way_to_split = models.ForeignKey(SplitWays, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100)
     total_amount = models.IntegerField()  # this is the sum of all amounts in transactions table
     owers = models.ManyToManyField(User, through="Transactions", related_name='user_is_ower')
